@@ -75,6 +75,12 @@ for i to ene_intervalos_tier_2
 
 	x_f0 = Get mean: ini, fin, "Hertz"
 
+	max_f0 =  Get maximum: ini, fin, "Hertz", "parabolic"
+
+	min_f0 = Get minimum: ini, fin, "Hertz", "parabolic"
+
+	st_max_min = 12*log2(max_f0/min_f0)
+
 
 	if etiqueta2$ <> "<pl>" and etiqueta2$ <> "<pb>" and etiqueta2$ <> "<pm>" and etiqueta2$ <> "<pll>" and etiqueta2$ <> "<P>" and etiqueta2$ <> ""
 
@@ -88,48 +94,11 @@ for i to ene_intervalos_tier_2
 
 		Set numeric value: contador_etiquetas, "x_hz", x_f0
 
+		Set numeric value: contador_etiquetas, "st", st_max_min
 
 	endif
-		
+
 endfor
 
 
 
-
-
-
-##########################
-
-
-
-
-#Número de curvas prosódicas
-
-#número de palabra rítmica
-
-#"dif_max_min_db" + tier
-
-#declarat tipo específico de prosodia
-
-#focus
-
-#st rango de st
-
-#verso curva / correspondencia
-
- #"n_sil_p_pr"#
-
-
-#vs(CP): verso curva cuando coincide con n_cp
-#CP(vs): hemiverso. Cada curva incluye porciones del verso
-
-#interverso
-
-#una curva prosódica con más versos curva poliverso
-
-
-#verso y curva prosódica
-
-
-#tabla 
-#	curvas prosódicas	pausas	
