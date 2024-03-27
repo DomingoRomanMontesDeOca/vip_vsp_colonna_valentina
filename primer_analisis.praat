@@ -71,6 +71,10 @@ for i to ene_intervalos_tier_2
 
 	dur = fin-ini
 
+	selecto = Extract part: ini, fin, "no"
+
+	ene_pr = Get number of intervals: 1
+
 	select tono
 
 	x_f0 = Get mean: ini, fin, "Hertz"
@@ -96,9 +100,11 @@ for i to ene_intervalos_tier_2
 
 		Set numeric value: contador_etiquetas, "st", st_max_min
 
+		Set numeric value: contador_etiquetas, "n_pr", ene_pr
+
 	endif
 
+	select selecto
+	Remove
+
 endfor
-
-
-
