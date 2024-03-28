@@ -1,4 +1,5 @@
-# corrector de etiquetas
+# corrector de etiquetas en los cuatro tiers
+# requiere solo el TextGrid
 
 tg = selected("TextGrid")
 
