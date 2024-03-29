@@ -48,7 +48,7 @@ endfor
 
 
 # crea la tabla con los datos
-tabla_por_curva = Create Table with column names: "table", contador_de_intervalos_sin_pausa, { "n_cp","texto", "n_silabas", "duracion", "n_pr", "st", "x_hz", "dif_max_min_db", " x_db", "interrup", "sinonim", "declarat_poet", "focus", "encabalga" }
+tabla_por_curva = Create Table with column names: "table", contador_de_intervalos_sin_pausa, { "n_cp","texto", "n_silabas", "duracion", "n_pr", "st", "x_hz", "dif_max_min_db", "x_db", "interrup", "sinonim", "declarat_poet", "focus", "encabalga" }
 
 
 # agrega el número correlativo del verso-curva en la tabla
@@ -84,8 +84,9 @@ for i to ene_intervalos_tier_2
 
 	dur = fin-ini
 
-	selecto = Extract part: ini, fin, "no"
-
+# Trabaja con un extracto del TGrid
+#	selecto = Extract part: ini, fin, "no"
+	selecto = Extract part: ini, fin, "yes"
 	ene_pr = Get number of intervals: 1
 
 	ene_puntos_tier_6 = Get number of points: 6
@@ -102,6 +103,56 @@ for i to ene_intervalos_tier_2
 	endif
 
 
+
+	ene_puntos_tier_5 = Get number of points: 5
+
+
+
+	if ene_puntos_tier_5 == 3
+
+		tiempo_intens_A =  Get time of point: 5, 1
+
+		tiempo_intens_B	=  Get time of point: 5, 2
+
+		tiempo_intens_C =  Get time of point: 5, 3
+
+		select intensidad
+
+		db_A = Get value at time: tiempo_intens_A, "cubic"
+		db_B = Get value at time: tiempo_intens_B, "cubic"
+		db_C = Get value at time: tiempo_intens_C, "cubic"
+
+		x_db = (db_A + db_B + db_C)/3
+
+		if db_A > db_B and db_A > db_C
+			max_db = db_A
+				if db_B < db_C
+					min_db = db_B
+				else
+					min_db = db_C
+
+				endif
+		elsif db_B > db_A and db_B > db_C
+			max_db = db_B
+				if db_A < db_C
+					min_db = db_A
+				else
+					min_db = db_C
+				endif
+		
+		elsif db_C > db_A and db_C > db_B
+			max_db = db_C
+				if db_A < db_B
+					min_db = db_A
+				else
+					min_db = db_B
+				endif
+		endif
+
+		dif_max_min_db = max_db - min_db
+		
+	
+	endif
 
 
 	select tono
@@ -132,6 +183,10 @@ for i to ene_intervalos_tier_2
 		Set numeric value: contador_etiquetas, "n_pr", ene_pr
 
 		Set numeric value: contador_etiquetas, "n_silabas", ene_silabas
+
+		Set numeric value: contador_etiquetas, "dif_max_min_db", dif_max_min_db
+
+		Set numeric value: contador_etiquetas, "x_db", x_db	
 
 	endif
 
