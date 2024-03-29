@@ -197,7 +197,4 @@ endfor
 
 select tabla_por_curva
 
-Append quotient column: "duracion", "n_silabas", "vel_elocucion"
-
-
-
+Append quotient column: "n_silabas", "duracion", "vel_elocucion"
