@@ -4,6 +4,10 @@
 # en función de la vocal inicial, una vocal media y la vocal final
 # o tres puntos en caso de que no haya tres vocales en la selección
 
+
+## falta corregir etiqueta "<" y nada más
+## líneas sobrantes
+
 tg = selected("TextGrid")
 
 ene_tiers = Get number of tiers
