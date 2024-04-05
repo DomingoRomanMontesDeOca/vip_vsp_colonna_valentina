@@ -9,6 +9,7 @@
 # 1 (número de poema del autor)
 # Es (lengua)
 # 2023 (año de la grabación)
+# @valentinacolonna
 
 
 tg = selected("TextGrid")
