@@ -1,24 +1,24 @@
-
+# el script puede fallar por etiquetas mal puestas de pausas en tier 2
+# falta el definitivo código del nombre para extraer variables a partir de él.
 
 
 tg = selected("TextGrid")
-
 sn = selected("Sound")
 sn$ = selected$("Sound")
-
 tono = selected("Pitch")
 
 # crea objeto de intensidad
 
 
 select sn
+
 intensidad =  To Intensity: 100, 0, "yes"
 
 
 writeInfoLine: "==========00=========="
 
 
-# tier 2 = CP o curva prosódica
+# El tier 2 es "CP" o curva prosódica
 
 
 
@@ -34,9 +34,11 @@ for i to ene_intervalos_tier_2
 
 	etiqueta$ = Get label of interval: 2, i
 
-	if etiqueta$ <> "<pl>" and etiqueta$ <> "<pb>" and etiqueta$ <> "<pm>" and etiqueta$ <> "<pll>" and etiqueta$ <> "<P>" and etiqueta$ <> ""
+	if etiqueta$ <> "<pl>" and etiqueta$ <> "<pb>" and etiqueta$ <> "<pm>" and etiqueta$ <> "<pll>" and etiqueta$ <> "<P>" and etiqueta$ <> "" and etiqueta$ <> "  "
 
-# 	suma 1 cada vez que corresponda al contador de intervalos excluyendo las pausas		
+
+# 	suma 1 cada vez que corresponda al contador de intervalos excluyendo las pausas
+		
 	contador_de_intervalos_sin_pausa = contador_de_intervalos_sin_pausa + 1
 
 	endif
@@ -44,11 +46,12 @@ for i to ene_intervalos_tier_2
 endfor
 
 
-# En este punto, el contador de intervalos sin contar las pausas está completo
+# En este punto, el contador de intervalos —sin contar las pausas— está completo
 
 
 # crea la tabla con los datos
-tabla_por_curva = Create Table with column names: "table", contador_de_intervalos_sin_pausa, { "n_cp","texto", "n_silabas", "duracion", "n_pr", "st", "x_hz", "dif_max_min_db", "x_db", "interrup", "sinonim", "declarat_poet", "focus", "encabalga" }
+
+tabla_por_curva = Create Table with column names: "table", contador_de_intervalos_sin_pausa, { "n_cp","texto", "n_silabas", "verso-curva", "duracion", "n_pr", "st", "x_hz", "dif_max_min_db", "x_db", "interrup", "sinonim", "declarat_poet", "focus", "encabalga" }
 
 
 # agrega el número correlativo del verso-curva en la tabla
@@ -84,9 +87,11 @@ for i to ene_intervalos_tier_2
 
 	dur = fin-ini
 
-# Trabaja con un extracto del TGrid
+# Trabaja con un extracto del TextGrid
 #	selecto = Extract part: ini, fin, "no"
+
 	selecto = Extract part: ini, fin, "yes"
+
 	ene_pr = Get number of intervals: 1
 
 	ene_puntos_tier_6 = Get number of points: 6
@@ -151,7 +156,10 @@ for i to ene_intervalos_tier_2
 
 		dif_max_min_db = max_db - min_db
 		
-	
+	else
+		
+		dif_max_min_db = 1
+
 	endif
 
 
@@ -164,6 +172,8 @@ for i to ene_intervalos_tier_2
 	min_f0 = Get minimum: ini, fin, "Hertz", "parabolic"
 
 	st_max_min = 12*log2(max_f0/min_f0)
+
+
 
 
 	if etiqueta2$ <> "<pl>" and etiqueta2$ <> "<pb>" and etiqueta2$ <> "<pm>" and etiqueta2$ <> "<pll>" and etiqueta2$ <> "<P>" and etiqueta2$ <> ""
