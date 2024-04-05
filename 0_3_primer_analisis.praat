@@ -11,7 +11,6 @@
 # 2023 (año de la grabación)
 # @valentinacolonna
 
-
 tg = selected("TextGrid")
 sn = selected("Sound")
 sn$ = selected$("Sound")
