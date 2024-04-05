@@ -8,5 +8,4 @@ Valentina Colonna y Domingo Román
 3. Corrección de puntos en tier intensidad
 4. Corrección del pitch object
 5. aplicación del script que crea tabla de datos Nº 1
-
-6. 
+6. aplicación del script que señala si existe verso-curva o no
