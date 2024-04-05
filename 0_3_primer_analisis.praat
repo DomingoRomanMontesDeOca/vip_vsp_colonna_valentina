@@ -1,5 +1,14 @@
 # el script puede fallar por etiquetas mal puestas de pausas en tier 2
 # falta el definitivo código del nombre para extraer variables a partir de él.
+# nombre de audio : Mora0fGranLorca1Es2023
+# Mora (apellido lector)
+# 0 (diferenciador de apellido)
+# f (sexo)
+# Gran(ciudad)
+# Lorca (autor)
+# 1 (número de poema del autor)
+# Es (lengua)
+# 2023 (año de la grabación)
 
 
 tg = selected("TextGrid")
@@ -8,7 +17,6 @@ sn$ = selected$("Sound")
 tono = selected("Pitch")
 
 # crea objeto de intensidad
-
 
 select sn
 
