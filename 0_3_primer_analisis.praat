@@ -11,10 +11,40 @@
 # 2023 (año de la grabación)
 # @valentinacolonna
 
-tg = selected("TextGrid")
-sn = selected("Sound")
-sn$ = selected$("Sound")
-tono = selected("Pitch")
+
+
+# Verficar que sean tres los objetos seleccionados, 
+
+ene_objetos_seleccionados = numberOfSelected()
+
+if ene_objetos_seleccionados <> 3
+
+	appendInfoLine: "No tienes tres objetos seleccionados"
+
+else
+	tg = selected("TextGrid")
+	tg$ = selected$("TextGrid")
+	sn = selected("Sound")
+	sn$ = selected$("Sound")
+	tono = selected("Pitch")
+	tono$ = selected$("Pitch")
+
+endif
+
+ene_sonidos_seleccionados = numberOfSelected("Sound")
+ene_etiquet_seleccionados = numberOfSelected("TextGrid")
+ene_tonos_seleccionados = numberOfSelected("Pitch")
+
+if ene_sonidos_seleccionados <> 1 or ene_etiquet_seleccionados <> 1 or ene_tonos_seleccionados <> 1
+	appendInfoLine: "Falta un objeto en la selección"
+endif
+
+writeInfoLine: "=========="
+appendInfoLine: tg$,tab$,sn$,tab$,tono$
+if tg$ <> sn$ or sn$ <> tono$ or tono$ <> tg$
+	appendInfoLine: "Revise que sean los archivos que corresponde"
+endif
+
 
 # crea objeto de intensidad
 
