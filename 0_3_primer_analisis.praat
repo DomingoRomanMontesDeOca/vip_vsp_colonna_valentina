@@ -1,16 +1,18 @@
 # el script puede fallar por etiquetas mal puestas de pausas en tier 2
-# falta el definitivo código del nombre para extraer variables a partir de él.
-# nombre de audio : Mora0fGranLorca1Es2023
-# Mora (apellido lector)
-# 0 (diferenciador de apellido)
-# f (sexo)
-# Gran(ciudad)
-# Lorca (autor)
-# 1 (número de poema del autor)
-# Es (lengua)
-# 2023 (año de la grabación)
+# 
+# ejemplo:
+# 	nombre de audio : Mora0fGranLorca1Es2023
+# 		Mora (apellido lector)
+# 		0 (diferenciador de apellido)
+# 		f (sexo)
+# 		Gran(ciudad)
+# 		Lorca (autor)
+# 		1 (número de poema del autor)
+# 		Es (lengua)
+# 		2023 (año de la grabación)
 # @valentinacolonna
 
+# se supone que el textGrid tiene 7 tiers
 
 
 # Verficar que sean tres los objetos seleccionados, 
@@ -39,11 +41,35 @@ if ene_sonidos_seleccionados <> 1 or ene_etiquet_seleccionados <> 1 or ene_tonos
 	appendInfoLine: "Falta un objeto en la selección"
 endif
 
-writeInfoLine: "=========="
-appendInfoLine: tg$,tab$,sn$,tab$,tono$
+
+writeInfoLine: "=====0====="
+
 if tg$ <> sn$ or sn$ <> tono$ or tono$ <> tg$
 	appendInfoLine: "Revise que sean los archivos que corresponde"
 endif
+
+
+
+# verificar que todos los objetos tengan la misma longitud
+
+
+
+
+
+# variables para datos de las primeras columnas: lector, autor, poema, etc.
+
+apellido_lector$ = left$(sn$, 4)
+
+# Diferenciador de apellido en caso de que haya más de uno con el mismo apellido
+
+diferen_apellido$ = mid$(sn$, 5, 1)
+sexo$ = mid$(sn$, 6,1)
+ciudad$ = mid$(sn$, 7, 3)
+autor$ = mid$(sn$,11,4)
+n_poema$ = mid$(sn$,15,1) 
+lengua$ =mid$(sn$,16,2)
+ano_grabacion$ = mid$(sn$,18,4)
+
 
 
 # crea objeto de intensidad
@@ -91,7 +117,7 @@ endfor
 
 # crea la tabla con los datos
 
-tabla_por_curva = Create Table with column names: "table", contador_de_intervalos_sin_pausa, { "n_cp","texto", "n_silabas", "verso-curva", "duracion", "n_pr", "st", "x_hz", "dif_max_min_db", "x_db", "interrup", "sinonim", "declarat_poet", "focus", "encabalga" }
+tabla_por_curva = Create Table with column names: "table", contador_de_intervalos_sin_pausa, { "apellido_lector", "diferen_apellido", "sexo", "ciudad", "autor", "n_poema", "lengua", "ano_grabacion","n_cp","texto", "n_silabas", "verso-curva", "duracion", "n_pr", "st", "x_hz", "dif_max_min_db", "x_db", "interrup", "sinonim", "declarat_poet", "focus", "encabalga" }
 
 
 # agrega el número correlativo del verso-curva en la tabla
@@ -224,6 +250,22 @@ for i to ene_intervalos_tier_2
 
 		Set string value: contador_etiquetas, "texto", etiqueta2$
 
+		Set string value: contador_etiquetas, "apellido_lector", apellido_lector$
+
+		Set string value: contador_etiquetas, "diferen_apellido",diferen_apellido$
+
+		Set string value: contador_etiquetas, "sexo", sexo$
+
+		Set string value: contador_etiquetas, "ciudad", ciudad$
+
+		Set string value: contador_etiquetas, "autor", autor$
+
+		Set string value: contador_etiquetas, "n_poema", n_poema$
+
+		Set string value: contador_etiquetas, "lengua", lengua$
+
+		Set string value: contador_etiquetas, "ano_grabacion", ano_grabacion$
+
 		Set numeric value: contador_etiquetas, "duracion", dur
 
 		Set numeric value: contador_etiquetas, "x_hz", x_f0
@@ -237,6 +279,8 @@ for i to ene_intervalos_tier_2
 		Set numeric value: contador_etiquetas, "dif_max_min_db", dif_max_min_db
 
 		Set numeric value: contador_etiquetas, "x_db", x_db	
+
+
 
 	endif
 
