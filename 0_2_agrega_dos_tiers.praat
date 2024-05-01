@@ -4,6 +4,10 @@
 # en función de la vocal inicial, una vocal media y la vocal final
 # o tres puntos en caso de que no haya tres vocales en la selección
 
+# agrega el tier de número de sílabas
+
+# agrega un tier para la interrupt
+
 
 ## falta corregir etiqueta "<" y nada más
 ## líneas sobrantes
@@ -17,6 +21,8 @@ if ene_tiers == 4
 	Insert point tier: 5, "Intensidad"
 
 	Insert point tier: 6, "Nsilabas"
+
+	Insert point tier: 7, "Interrupt"
 
 	ene_intervalos_tier_2 = Get number of intervals: 2
 
