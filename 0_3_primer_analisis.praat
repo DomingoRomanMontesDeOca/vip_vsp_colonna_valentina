@@ -33,7 +33,9 @@ else
 endif
 
 ene_sonidos_seleccionados = numberOfSelected("Sound")
+
 ene_etiquet_seleccionados = numberOfSelected("TextGrid")
+
 ene_tonos_seleccionados = numberOfSelected("Pitch")
 
 if ene_sonidos_seleccionados <> 1 or ene_etiquet_seleccionados <> 1 or ene_tonos_seleccionados <> 1
