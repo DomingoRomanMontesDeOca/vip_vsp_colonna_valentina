@@ -12,10 +12,9 @@
 # 		2023 (año de la grabación)
 # @valentinacolonna
 
-# se supone que el textGrid tiene 7 tiers
+# se supone que el textGrid tiene 10 tiers
 
-
-# Verficar que sean tres los objetos seleccionados, 
+# Verfica que sean tres los objetos seleccionados, 
 
 ene_objetos_seleccionados = numberOfSelected()
 
@@ -42,7 +41,6 @@ if ene_sonidos_seleccionados <> 1 or ene_etiquet_seleccionados <> 1 or ene_tonos
 endif
 
 
-writeInfoLine: "=====0====="
 
 if tg$ <> sn$ or sn$ <> tono$ or tono$ <> tg$
 	appendInfoLine: "Revise que sean los archivos que corresponde"
@@ -85,7 +83,6 @@ writeInfoLine: "==========00=========="
 # El tier 2 es "CP" o curva prosódica
 
 
-
 # inicia contador de intervalos sin considerar las pausa
 
 contador_de_intervalos_sin_pausa = 0
@@ -117,7 +114,7 @@ endfor
 
 # crea la tabla con los datos
 
-tabla_por_curva = Create Table with column names: "table", contador_de_intervalos_sin_pausa, { "apellido_lector", "diferen_apellido", "sexo", "ciudad", "autor", "n_poema", "lengua", "ano_grabacion","n_cp","texto", "n_silabas", "verso-curva", "duracion", "n_pr", "st", "x_hz", "dif_max_min_db", "x_db", "interrup", "sinonim", "declarat_poet", "focus", "encabalga" }
+tabla_por_curva = Create Table with column names: "table", contador_de_intervalos_sin_pausa, { "apellido_lector", "diferen_apellido", "sexo", "ciudad", "autor", "n_poema", "lengua", "ano_grabacion","n_cp","n_intervalo","n_verso","hemiverso","texto", "n_silabas", "verso-curva", "duracion", "n_pr", "st", "x_hz", "dif_max_min_db", "x_db", "interrup", "sinonim", "declarat_poet", "focus", "encabalga" }
 
 
 # agrega el número correlativo del verso-curva en la tabla
@@ -153,8 +150,8 @@ for i to ene_intervalos_tier_2
 
 	dur = fin-ini
 
+
 # Trabaja con un extracto del TextGrid
-#	selecto = Extract part: ini, fin, "no"
 
 	selecto = Extract part: ini, fin, "yes"
 
@@ -268,6 +265,8 @@ for i to ene_intervalos_tier_2
 
 		Set numeric value: contador_etiquetas, "duracion", dur
 
+		Set numeric value: contador_etiquetas, "n_intervalo", i
+
 		Set numeric value: contador_etiquetas, "x_hz", x_f0
 
 		Set numeric value: contador_etiquetas, "st", st_max_min
@@ -311,7 +310,7 @@ for i to ene_intervalos_tier_2
 
 	etiqueta2$ = Get label of interval: 2, i
 
-	if etiqueta2$ <> "" and etiqueta2$ <> "<P>" and etiqueta2$ <> "<pl>" and etiqueta2$ <> "<pb>"
+	if etiqueta2$ <> "" and etiqueta2$ <> "<P>" and etiqueta2$ <> "<pl>" and etiqueta2$ <> "<pb>" and etiqueta2$ <> " "
 
 		ini_intervalo_tier_2 = Get start time of interval: 2, i
 
@@ -321,11 +320,7 @@ for i to ene_intervalos_tier_2
 
 		intervalo_alto_tier_4_tiempo_finT2 = Get high interval at time: 4, fin_intervalo_tier_2
 		
-		#appendInfoLine: i, tab$, intervalo_alto_tier_4_tiempo_iniT2,tab$, intervalo_alto_tier_4_tiempo_finT2
-
 		contador_casos = contador_casos + 1
-
-		#appendInfoLine: contador_casos
 
 		select tabla_provisoria
 
@@ -363,9 +358,6 @@ for i to n_filas_tabla_provisoria-1
 		Set numeric value: i, "c", valor_c
 
 endfor
-
-
-
 
 
 
@@ -450,3 +442,158 @@ endfor
 select intensidad
 plus tabla_provisoria
 Remove
+
+
+# 
+
+########### hemiversos #############
+
+writeInfoLine: "=====0====="
+
+tabla_para_hemiversos =Create Table with column names: "table", contador_de_intervalos_sin_pausa, { "cp", "vs", "hvs" }
+
+
+for i to n_filas_tabla_por_curva
+
+	select tabla_por_curva
+
+	intervalo = Get value: i, "n_intervalo"
+
+	# se tiene el número del intervalo en el TextGrid
+
+	select tg
+
+	tiempo_ini_cp = Get start time of interval: 2, intervalo
+
+	tiempo_fin_cp = Get end time of interval: 2, intervalo
+
+	intervalo_tiempo_ini_cp = Get interval at time: 4, tiempo_ini_cp
+
+	select tabla_para_hemiversos
+
+	Set numeric value: i, "cp", i
+
+	Set numeric value: i, "vs", intervalo_tiempo_ini_cp
+
+	
+endfor
+
+
+select tabla_para_hemiversos
+
+ene_filas = Get number of rows
+
+
+for i to ene_filas-1
+
+	select tabla_para_hemiversos
+
+	valor = Get value: i, "vs"
+
+	valor2 = Get value: i + 1, "vs"
+
+	sigue = i + 1
+
+	if valor == valor2
+
+		hemi = 1
+
+		Set numeric value: i, "hvs", hemi
+
+		Set numeric value: i+1, "hvs", hemi
+
+	else
+
+		hemi = 0
+
+		Set numeric value: i, "hvs", hemi
+
+	endif
+
+endfor
+
+
+
+
+
+
+for i to ene_filas-1
+
+	valor1 = Get value: i, "vs"
+
+	valor2 = Get value: i + 1, "vs"
+
+	if valor1 == valor2
+		
+		Set numeric value: i+1, "hvs", 1
+
+	endif
+
+endfor
+
+
+# resolver última línea
+
+valor_penultimo_vs = Get value: ene_filas-1, "vs"
+
+valor_final_vs = Get value: ene_filas, "vs"
+
+
+
+if valor_penultimo_vs == valor_final_vs
+	
+	Set numeric value: ene_filas, "hvs", 1
+
+	Set numeric value: ene_filas-1, "hvs", 1
+
+else
+
+	Set numeric value: ene_filas, "hvs", 0
+
+
+endif
+
+select tabla_para_hemiversos
+
+ene_filas_hemiverso = Get number of rows
+
+
+select tabla_por_curva
+
+ene_filas_curvas = Get number of rows
+
+
+if ene_filas_hemiverso <> ene_filas_curvas
+
+	appendInfoLine: "No coincide número de filas"
+
+endif 
+
+#### Pasa valores a tabla general
+
+
+select tabla_para_hemiversos
+
+for i to ene_filas
+
+	select tabla_para_hemiversos
+
+	n_verso = Get value: i, "vs"
+
+	valor_hemi =  Get value: i, "hvs"
+
+	select tabla_por_curva
+
+	Set numeric value: i, "n_verso", n_verso
+
+	Set numeric value: i, "hemiverso", valor_hemi
+
+endfor
+
+
+select tabla_para_hemiversos
+
+
+Remove
+
+appendInfoLine: "Se ha realizado el análisis completo"
