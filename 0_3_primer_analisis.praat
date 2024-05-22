@@ -1,15 +1,25 @@
 # el script puede fallar por etiquetas mal puestas de pausas en tier 2
 # 
 # ejemplo:
+#
 # 	nombre de audio : Mora0fGranLorca1Es2023
+
 # 		Mora (apellido lector)
+
 # 		0 (diferenciador de apellido)
+
 # 		f (sexo)
+
 # 		Gran(ciudad)
+
 # 		Lorca (autor)
+
 # 		1 (número de poema del autor)
+
 # 		Es (lengua)
+
 # 		2023 (año de la grabación)
+
 # @valentinacolonna
 
 # se supone que el textGrid tiene 10 tiers
@@ -39,21 +49,30 @@ ene_etiquet_seleccionados = numberOfSelected("TextGrid")
 ene_tonos_seleccionados = numberOfSelected("Pitch")
 
 if ene_sonidos_seleccionados <> 1 or ene_etiquet_seleccionados <> 1 or ene_tonos_seleccionados <> 1
+
 	appendInfoLine: "Falta un objeto en la selección"
+
 endif
 
 
 
 if tg$ <> sn$ or sn$ <> tono$ or tono$ <> tg$
+
 	appendInfoLine: "Revise que sean los archivos que corresponde"
+
 endif
 
 
 
-# verificar que todos los objetos tengan la misma longitud
+# verificar que el nombre de cada objeto coincida con los otros correspondientes (tengan la misma longitud sin contar la extensión)
 
+# cuenta intervalos en tiers 2 y 4
 
+select tg
 
+ene_intervalos_tier_2 = Get number of intervals: 2
+
+ene_intervalos_tier_4 = Get number of intervals: 4
 
 
 # variables para datos de las primeras columnas: lector, autor, poema, etc.
@@ -63,11 +82,17 @@ apellido_lector$ = left$(sn$, 4)
 # Diferenciador de apellido en caso de que haya más de uno con el mismo apellido
 
 diferen_apellido$ = mid$(sn$, 5, 1)
+
 sexo$ = mid$(sn$, 6,1)
+
 ciudad$ = mid$(sn$, 7, 3)
+
 autor$ = mid$(sn$,11,4)
+
 n_poema$ = mid$(sn$,15,1) 
+
 lengua$ =mid$(sn$,16,2)
+
 ano_grabacion$ = mid$(sn$,18,4)
 
 
@@ -84,23 +109,19 @@ writeInfoLine: "==========00=========="
 
 # El tier 2 es "CP" o curva prosódica
 
-
 # inicia contador de intervalos sin considerar las pausa
+# Esto es importante para crear una tabla con el número de filas que corresponden a curvas prosódicas
+# y no considerar los intervalos no etiquetados ni los etiquetados con pausas, como "<P>" u otro.
 
 contador_de_intervalos_sin_pausa = 0
 
-
 select tg
-ene_intervalos_tier_2 = Get number of intervals: 2
-ene_intervalos_tier_4 = Get number of intervals: 4
-
 
 for i to ene_intervalos_tier_2
 
 	etiqueta$ = Get label of interval: 2, i
 
 	if etiqueta$ <> "<pl>" and etiqueta$ <> "<pb>" and etiqueta$ <> "<pm>" and etiqueta$ <> "<pll>" and etiqueta$ <> "<P>" and etiqueta$ <> "" and etiqueta$ <> "  "
-
 
 # 	suma 1 cada vez que corresponda al contador de intervalos excluyendo las pausas
 		
@@ -113,13 +134,12 @@ endfor
 
 # En este punto, el contador de intervalos —sin contar las pausas— está completo
 
-
-# crea la tabla con los datos
+# crea la tabla para disponer los datos por curva prosódica. El contador_de_intervalos_sin_pausa es el número de curvas prosódicas de la recitación
 
 tabla_por_curva = Create Table with column names: "table", contador_de_intervalos_sin_pausa, { "apellido_lector", "diferen_apellido", "sexo", "ciudad", "autor", "n_poema", "lengua", "ano_grabacion","n_cp","n_intervalo","n_verso","hemiverso","texto", "n_silabas", "verso-curva", "duracion", "n_pr", "st", "x_hz", "dif_max_min_db", "x_db", "interrup", "sinonim", "declarat_poet", "focus", "encabalga" }
 
 
-# agrega el número correlativo del verso-curva en la tabla
+# agrega un número correlativo del verso-curva en la tabla
 
 for i to contador_de_intervalos_sin_pausa
 
@@ -131,14 +151,21 @@ endfor
 
 
 
-select tg
 
 
 # contador_etiquetas es el número de intervalos no vacíos, excluyendo las pausas
+
 # esta parte del código agrega el texto de la curva prosódica
 
+select tg
 
+# Revisar funcionalidad de esta variable.
+
+# es posible que repita el valor de contador_de_intervalos_sin_pausa
+
+###################
 contador_etiquetas = 0
+###################
 
 for i to ene_intervalos_tier_2
 
@@ -173,9 +200,7 @@ for i to ene_intervalos_tier_2
 	endif
 
 
-
 	ene_puntos_tier_5 = Get number of points: 5
-
 
 
 	if ene_puntos_tier_5 == 3
@@ -189,34 +214,55 @@ for i to ene_intervalos_tier_2
 		select intensidad
 
 		db_A = Get value at time: tiempo_intens_A, "cubic"
+
 		db_B = Get value at time: tiempo_intens_B, "cubic"
+
 		db_C = Get value at time: tiempo_intens_C, "cubic"
 
 		x_db = (db_A + db_B + db_C)/3
 
 		if db_A > db_B and db_A > db_C
+
 			max_db = db_A
+
 				if db_B < db_C
+
 					min_db = db_B
+
 				else
+
 					min_db = db_C
 
 				endif
+
 		elsif db_B > db_A and db_B > db_C
+
 			max_db = db_B
+
 				if db_A < db_C
+
 					min_db = db_A
+
 				else
+
 					min_db = db_C
+
 				endif
 		
 		elsif db_C > db_A and db_C > db_B
+
 			max_db = db_C
+
 				if db_A < db_B
+
 					min_db = db_A
+
 				else
+
 					min_db = db_B
+
 				endif
+
 		endif
 
 		dif_max_min_db = max_db - min_db
@@ -239,9 +285,7 @@ for i to ene_intervalos_tier_2
 	st_max_min = 12*log2(max_f0/min_f0)
 
 
-
-
-	if etiqueta2$ <> "<pl>" and etiqueta2$ <> "<pb>" and etiqueta2$ <> "<pm>" and etiqueta2$ <> "<pll>" and etiqueta2$ <> "<P>" and etiqueta2$ <> ""
+	if etiqueta2$ <> "<pl>" and etiqueta2$ <> "<pb>" and etiqueta2$ <> "<pm>" and etiqueta2$ <> "<pll>" and etiqueta2$ <> "<P>" and etiqueta2$ <> "" and etiqueta2$ <> " "
 
 		contador_etiquetas = contador_etiquetas + 1
 
@@ -286,23 +330,25 @@ for i to ene_intervalos_tier_2
 	endif
 
 	select selecto
+
 	Remove
 
 endfor
+
+
+# Agrega la columna con la velocidad de elocución que divide n_silabas/duracion
 
 select tabla_por_curva
 
 Append quotient column: "n_silabas", "duracion", "vel_elocucion"
 
 
-# ====================
-
 select tg
 
 # Recorre todos los intervalos del tier 2 (CP)
 
 
-tabla_provisoria = Create Table with column names: "provisoria", 19, { "a", "b", "c" }
+tabla_provisoria = Create Table with column names: "provisoria", contador_de_intervalos_sin_pausa, { "a", "b", "c" }
 
 contador_casos = 0
 
@@ -331,8 +377,6 @@ for i to ene_intervalos_tier_2
 		Set numeric value: contador_casos, "b", intervalo_alto_tier_4_tiempo_finT2
 
 	endif
-
-
 
 endfor
 
@@ -410,8 +454,11 @@ Set numeric value: n_filas_tabla_provisoria, "c", valor_c
 
 
 # Agrega el valor de verso-curva en la columna señalada
+
 # Indica 0 si coincide el intervalo del tier 2 con el del tier 4
+
 # Si coincide, verso-curva = 0
+
 # Si no coincide, verso-curva = 1
 
 select tabla_por_curva
@@ -442,11 +489,11 @@ for i to n_filas_tabla_por_curva
 endfor
 
 select intensidad
+
 plus tabla_provisoria
+
 Remove
 
-
-# 
 
 ########### hemiversos #############
 
