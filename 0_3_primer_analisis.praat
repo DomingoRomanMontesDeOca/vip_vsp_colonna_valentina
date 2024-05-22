@@ -397,10 +397,10 @@ for i to n_filas_tabla_provisoria-1
 
 		if a == a2
 
-			valor_c = 1
+			valor_c = 0
 
 		else
-			valor_c = 0
+			valor_c = 1
 
 		endif
 
@@ -426,13 +426,13 @@ for i to n_filas_tabla_provisoria-1
 
 		ff = Get value: i, "c"
 
-		if ff == 1
+		if ff == 0
 
 			if dd2 == dd
 
 				select tabla_provisoria
 
-				Set numeric value: i+1, "c", 1
+				Set numeric value: i+1, "c", 0
 
 			endif
 
@@ -449,9 +449,9 @@ penultimo_valor = Get value: n_filas_tabla_provisoria-1, "a"
 
 if ultimo_valor == penultimo_valor
 
-	valor_c = 1
-else
 	valor_c = 0
+else
+	valor_c = 1
 
 endif
 
@@ -462,9 +462,9 @@ Set numeric value: n_filas_tabla_provisoria, "c", valor_c
 
 # Indica 0 si coincide el intervalo del tier 2 con el del tier 4
 
-# Si coincide, verso-curva = 0
+# Si coincide, verso-curva = 1
 
-# Si no coincide, verso-curva = 1
+# Si no coincide, verso-curva = 0
 
 select tabla_por_curva
 
