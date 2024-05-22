@@ -33,11 +33,17 @@ if ene_objetos_seleccionados <> 3
 	appendInfoLine: "No tienes tres objetos seleccionados"
 
 else
+
 	tg = selected("TextGrid")
+
 	tg$ = selected$("TextGrid")
+
 	sn = selected("Sound")
+
 	sn$ = selected$("Sound")
+
 	tono = selected("Pitch")
+
 	tono$ = selected$("Pitch")
 
 endif
@@ -106,11 +112,10 @@ intensidad =  To Intensity: 100, 0, "yes"
 
 writeInfoLine: "==========00=========="
 
-
-# El tier 2 es "CP" o curva prosódica
-
 # inicia contador de intervalos sin considerar las pausa
+
 # Esto es importante para crear una tabla con el número de filas que corresponden a curvas prosódicas
+
 # y no considerar los intervalos no etiquetados ni los etiquetados con pausas, como "<P>" u otro.
 
 contador_de_intervalos_sin_pausa = 0
@@ -641,7 +646,6 @@ endfor
 
 
 select tabla_para_hemiversos
-
 
 Remove
 
