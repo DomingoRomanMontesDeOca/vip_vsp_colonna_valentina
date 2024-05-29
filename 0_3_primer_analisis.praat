@@ -649,4 +649,45 @@ select tabla_para_hemiversos
 
 Remove
 
+
+
+
+######################################################################
+# Análisis de Interrupt
+######################################################################
+select tabla_por_curva
+
+nfilas = Get number of rows
+
+select tg
+
+for i to nfilas
+
+	select tg
+
+	# tiempo de inicio y de fin
+
+	ini_intervalo = Get start time of interval: 2, i
+
+	fin_intervalo = Get end time of interval: 2, i
+
+	# extrae fragmento del TextGrid
+
+	fragmento_tier_7 = Extract part: ini_intervalo, fin_intervalo, "no"
+
+	interruptus = Get number of points: 7
+
+	select tabla_por_curva
+
+	Set numeric value: i, "interrup", interruptus
+
+	select fragmento_tier_7
+
+	Remove
+
+endfor
+
+appendInfoLine: "Se ha realizado el análisis de interrupts"
+
+
 appendInfoLine: "Se ha realizado el análisis completo"
