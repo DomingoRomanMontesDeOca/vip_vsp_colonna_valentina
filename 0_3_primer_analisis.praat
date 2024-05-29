@@ -498,7 +498,7 @@ select intensidad
 plus tabla_provisoria
 
 Remove
-
+appendInfoLine: "Se ha realizado el análisis de intensidad"
 
 ########### hemiversos #############
 
@@ -649,7 +649,7 @@ select tabla_para_hemiversos
 
 Remove
 
-
+appendInfoLine: "Se ha realizado el análisis de hemiversos"
 
 
 ######################################################################
@@ -686,8 +686,79 @@ for i to nfilas
 	Remove
 
 endfor
-
 appendInfoLine: "Se ha realizado el análisis de interrupts"
+######################################################################
+# Análisis de Focus
+######################################################################
+
+
+select tabla_por_curva
+
+nfilas = Get number of rows
+
+for i to nfilas
+
+	select tabla_por_curva 
+
+	ene_de_intervalo_cp = Get value: i, "n_intervalo"
+
+	select tg
+
+	ini_intervalo = Get start time of interval: 2, ene_de_intervalo_cp
+
+	fin_intervalo = Get end time of interval: 2, ene_de_intervalo_cp
+
+	fragmento_tg = Extract part: ini_intervalo, fin_intervalo, "yes"	
+
+	focus = Get number of points: 10
+	
+	if focus == 3
+
+		appendInfoLine: "3!!!!"
+
+		tiempo_focus_1 = Get time of point: 10, 1
+
+		tiempo_focus_2 = Get time of point: 10, 2
+
+		tiempo_focus_3 = Get time of point: 10, 3
+
+		appendInfoLine: tiempo_focus_1
+
+		select tono
+
+		f0_focus_1 = Get value at time: tiempo_focus_1, "Hertz", "linear"
+
+		f0_focus_2 = Get value at time: tiempo_focus_2, "Hertz", "linear"
+
+		f0_focus_3 = Get value at time: tiempo_focus_3, "Hertz", "linear"
+
+	else
+
+		f0_focus_1 = 0
+
+		f0_focus_2 = 0
+
+		f0_focus_3 = 0
+
+	endif	
+
+	
+		select 	tabla_por_curva
+
+		Set numeric value: i, "focus1", f0_focus_1
+
+		Set numeric value: i, "focus2", f0_focus_2
+
+		Set numeric value: i, "focus3", f0_focus_3
+
+		select fragmento_tg
+
+		Remove
+
+endfor
+
+appendInfoLine: "Se ha realizado el análisis de focus"
+
 
 
 appendInfoLine: "Se ha realizado el análisis completo"
