@@ -1,3 +1,4 @@
+
 # el script puede fallar por etiquetas mal puestas de pausas en tier 2
 # 
 # ejemplo:
@@ -22,9 +23,10 @@
 
 # @valentinacolonna
 
-# se supone que el textGrid tiene 10 tiers
+# se supone un TextGrid de 10 capas
 
-# Verfica que sean tres los objetos seleccionados, 
+# Verifica que sean tres los objetos seleccionados
+
 
 ene_objetos_seleccionados = numberOfSelected()
 
@@ -81,6 +83,9 @@ ene_intervalos_tier_2 = Get number of intervals: 2
 ene_intervalos_tier_4 = Get number of intervals: 4
 
 
+writeInfoLine: "Comienza análisis de ", sn$ 
+
+
 # variables para datos de las primeras columnas: lector, autor, poema, etc.
 
 apellido_lector$ = left$(sn$, 4)
@@ -108,9 +113,6 @@ ano_grabacion$ = mid$(sn$,18,4)
 select sn
 
 intensidad =  To Intensity: 100, 0, "yes"
-
-
-writeInfoLine: "==========00=========="
 
 # inicia contador de intervalos sin considerar las pausa
 
@@ -141,7 +143,7 @@ endfor
 
 # crea la tabla para disponer los datos por curva prosódica. El contador_de_intervalos_sin_pausa es el número de curvas prosódicas de la recitación
 
-tabla_por_curva = Create Table with column names: "table", contador_de_intervalos_sin_pausa, { "apellido_lector", "diferen_apellido", "sexo", "ciudad", "autor", "n_poema", "lengua", "ano_grabacion","n_cp","n_intervalo","n_verso","hemiverso","texto", "n_silabas", "verso-curva", "duracion", "n_pr", "st", "x_hz", "dif_max_min_db", "x_db", "interrup", "sinonim", "declarat_poet", "focus1","focus2","focus3", "encabalga" }
+tabla_por_curva = Create Table with column names: "table", contador_de_intervalos_sin_pausa, { "apellido_lector", "diferen_apellido", "sexo", "ciudad", "autor", "n_poema", "lengua", "ano_grabacion","n_cp","n_intervalo","n_verso","hemiverso","texto", "n_silabas", "verso-curva", "duracion", "n_pr", "st", "x_hz", "dif_max_min_db", "x_db", "interrup", "sinonimia", "declarat_poet", "focus1","focus2","focus3", "encabalga" }
 
 
 # agrega un número correlativo del verso-curva en la tabla
@@ -341,12 +343,17 @@ for i to ene_intervalos_tier_2
 endfor
 
 
+appendInfoLine: "La tabla con los datos del archivo está completa"
+
+
 # Agrega la columna con la velocidad de elocución que divide n_silabas/duracion
 
 select tabla_por_curva
 
 Append quotient column: "n_silabas", "duracion", "vel_elocucion"
 
+
+appendInfoLine: "Velocidad de elocución inserta en la tabla"
 
 select tg
 
@@ -498,11 +505,13 @@ select intensidad
 plus tabla_provisoria
 
 Remove
-appendInfoLine: "Se ha realizado el análisis de intensidad"
+
+appendInfoLine: "Se ha realizado el análisis de verso-curva"
+
+
 
 ########### hemiversos #############
 
-writeInfoLine: "=====0====="
 
 tabla_para_hemiversos =Create Table with column names: "table", contador_de_intervalos_sin_pausa, { "cp", "vs", "hvs" }
 
@@ -714,15 +723,11 @@ for i to nfilas
 	
 	if focus == 3
 
-		appendInfoLine: "3!!!!"
-
 		tiempo_focus_1 = Get time of point: 10, 1
 
 		tiempo_focus_2 = Get time of point: 10, 2
 
 		tiempo_focus_3 = Get time of point: 10, 3
-
-		appendInfoLine: tiempo_focus_1
 
 		select tono
 
@@ -760,5 +765,64 @@ endfor
 appendInfoLine: "Se ha realizado el análisis de focus"
 
 
+
+######################################################################
+# Análisis de sinonimia
+######################################################################
+
+
+select tabla_por_curva
+
+nfilas = Get number of rows
+
+for i to nfilas
+
+	select tabla_por_curva 
+
+	ene_de_intervalo_cp = Get value: i, "n_intervalo"
+
+	select tg
+
+	ini_intervalo = Get start time of interval: 2, ene_de_intervalo_cp
+
+	fin_intervalo = Get end time of interval: 2, ene_de_intervalo_cp
+
+	fragmento_tg = Extract part: ini_intervalo, fin_intervalo, "no"	
+
+	sinonim = Get number of points: 8
+
+	if sinonim > 0
+	
+		if sinonim == 1
+
+		tpo_etiqueta_sinomimia$ = Get time of point: 8, 1
+
+		etiqueta_sinonimia$ = Get label of point: 8, 1
+	
+		elif sinonim > 1
+
+		etiqueta_sinonimia$ = "Más de 1"
+
+		endif
+
+	else
+
+		etiqueta_sinonimia$ = "0"
+
+		
+	endif	
+
+	
+		select 	tabla_por_curva
+
+		Set string value: i, "sinonimia", etiqueta_sinonimia$
+
+		select fragmento_tg
+
+		Remove
+
+endfor
+
+appendInfoLine: "Se ha realizado el análisis de sinonimia"
 
 appendInfoLine: "Se ha realizado el análisis completo"
