@@ -1,8 +1,9 @@
+# Versión infinita
 
 # el script puede fallar por etiquetas mal puestas de pausas en tier 2
-# 
+
 # ejemplo:
-#
+
 # 	nombre de audio : Mora0fGranLorca1Es2023
 
 # 		Mora (apellido lector)
