@@ -331,9 +331,9 @@ for i to ene_intervalos_tier_2
 
 		Set numeric value: contador_etiquetas, "dif_max_min_db", dif_max_min_db
 
-		Set numeric value: contador_etiquetas, "x_db", x_db	
-
-
+		Set numeric value: contador_etiquetas, "x_db", x_db
+		
+		Set numeric value: contador_etiquetas, "encabalga", 0
 
 	endif
 
@@ -826,4 +826,90 @@ endfor
 
 appendInfoLine: "Se ha realizado el análisis de sinonimia"
 
+
+select tg
+
+ene_versos = Get number of intervals: 4
+
+# appendInfoLine: ene_versos
+
+tabla_provisoria_2 = Create Table with column names: "table", ene_versos, { "verso", "encabalgamiento", "curvaPro" }
+
+
+for i to ene_versos
+
+	select tg
+
+	verso$ = Get label of interval: 4, i
+
+	if verso$ <> "" and verso$ <> "<P>" and verso$ <> "<pl>" and verso$ <> "<pb>" and verso$ <> "<pm>" and verso$ <> "<pll>" and verso$ <> "<P>" and verso$ <> " " and verso$ <> "  "
+
+		largo_verso = length(verso$)
+
+		ultimo_caracter$ = mid$(verso$,largo_verso,1)
+
+			if ultimo_caracter$ <> "." and ultimo_caracter$ <> "," and ultimo_caracter$ <> "!" and ultimo_caracter$ <> ";" and ultimo_caracter$ <> ":" and ultimo_caracter$ <> "\?" and ultimo_caracter$ <> "\)" and ultimo_caracter$ <> "\—"
+
+				encabalga = 1
+
+				tiempo_final_verso = Get end time of interval: 4, i
+
+				intervalo_en_vc = Get low interval at time: 2, tiempo_final_verso
+
+			else
+
+				encabalga = 0
+
+				intervalo_en_vc = 0
+
+			endif
+
+		select tabla_provisoria_2
+
+		Set numeric value: i, "verso", i
+
+		Set numeric value: i, "encabalgamiento", encabalga
+
+		Set numeric value: i, "curvaPro", intervalo_en_vc
+
+	endif
+
+endfor
+
+
+select tabla_provisoria_2
+
+sin_filas_vacias = Extract rows where column (number): "encabalgamiento", "greater than or equal to", 1
+
+ene_filas_tabla_sin_filas_vacias = Get number of rows
+
+
+for i to ene_filas_tabla_sin_filas_vacias
+
+		select sin_filas_vacias
+
+		curvapro$  = Get value: i, "curvaPro"
+
+		select tabla_por_curva
+
+		fila_para_llevar_valor$ = Search column: "n_intervalo", curvapro$
+
+		fila = number(fila_para_llevar_valor$)
+		
+		Set numeric value: fila, "encabalga", 1
+		
+		endif
+
+endfor
+
+
+select sin_filas_vacias
+plus tabla_provisoria_2
+Remove
+
+
+appendInfoLine: "Se ha realizado el análisis del encabalgamiento"
+
+
+appendInfoLine:"==============="
 appendInfoLine: "Se ha realizado el análisis completo"
