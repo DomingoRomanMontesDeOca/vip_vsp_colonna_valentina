@@ -1,103 +1,226 @@
-# corrector de etiquetas en los cuatro tiers
-# requiere solo el TextGrid
+# Corrige etiquetas (elimina espacios en blanco iniciales y finales)
+# en los tiers 1, 2 3 y 4
+
+
+# inicio de contadores
+
+contador_espacios_iniciales = 0
+
+contador_espacios_finales = 0
+
 
 tg = selected("TextGrid")
 
-n_intervalos_tier_1 = Get number of intervals: 1
-n_intervalos_tier_2 = Get number of intervals: 2
-n_intervalos_tier_3 = Get number of intervals: 3
-n_intervalos_tier_4 = Get number of intervals: 4
+ene_intervalos_1 = Get number of intervals: 1
 
-contador_etiquetas_inicio_espacio_tier_1 = 0
-contador_etiquetas_inicio_espacio_tier_2 = 0
-contador_etiquetas_inicio_espacio_tier_3 = 0
-contador_etiquetas_inicio_espacio_tier_4 = 0
+ene_intervalos_2 = Get number of intervals: 2
 
-writeInfoLine: "Se eliminan los espacios iniciales en las etiquetas de pausas"
-appendInfoLine: "================="
+ene_intervalos_3 = Get number of intervals: 3
+
+ene_intervalos_4 = Get number of intervals: 4
+
+writeInfoLine: "======"
+appendInfoLine: " R E P O R T E "
+
+for i to ene_intervalos_1
+
+	etiqueta_1$ = Get label of interval: 1, i
+
+	primer_caracter_1$ = left$(etiqueta_1$, 1)
+
+	ultimo_caracte_1$ = right$(etiqueta_1$, 1)
 
 
-for i to n_intervalos_tier_1
+	if startsWith(etiqueta_1$, " ")
 
-	select tg
+		largo = length(etiqueta_1$)
 
-	etiqueta_t1$ = Get label of interval: 1, i
+		appendInfoLine: i, tab$, largo
 
-	primer_caracter_t1$ = left$(etiqueta_t1$, 2)
+		nueva_etiqueta_1$ = right$(etiqueta_1$, largo-1)
 
-		if primer_caracter_t1$ == " <"
-			appendInfoLine: i,tab$,etiqueta_t1$
-			contador_etiquetas_inicio_espacio_tier_1 = contador_etiquetas_inicio_espacio_tier_1 + 1
-			etiqueta_t1$ = replace$ (etiqueta_t1$," <", "<",1)
-			Set interval text: 1, i, etiqueta_t1$
-		endif
+		appendInfoLine: etiqueta_1$
+
+		appendInfoLine: nueva_etiqueta_1$
+
+		Set interval text: 1, i, nueva_etiqueta_1$
+
+		contador_espacios_iniciales = contador_espacios_iniciales + 1
+	
+	endif
+
+
+	if endsWith(etiqueta_1$, " ")
+
+		largo = length(etiqueta_1$)
+
+		appendInfoLine: i, tab$, largo
+
+		nueva_etiqueta_1$ = left$(etiqueta_1$, largo-1)
+
+		appendInfoLine: etiqueta_1$
+
+		appendInfoLine: nueva_etiqueta_1$
+
+		Set interval text: 1, i, nueva_etiqueta_1$
+
+		contador_espacios_finales = contador_espacios_finales + 1
+	
+	endif
 
 endfor
 
-appendInfoLine: "Se han realizado ", contador_etiquetas_inicio_espacio_tier_1, " eliminaciones de espacio inicial en etiquetas del tier 1"
 
 
-for i to n_intervalos_tier_2
+for i to ene_intervalos_2
 
-	select tg
+	etiqueta_2$ = Get label of interval: 2, i
 
-	etiqueta_t2$ = Get label of interval: 2, i
+	primer_caracter_2$ = left$(etiqueta_2$, 1)
 
-	primer_caracter_t2$ = left$(etiqueta_t2$, 2)
+	ultimo_caracter_2$ = right$(etiqueta_2$, 1)
 
-		if primer_caracter_t2$ == " <"
-			appendInfoLine: i,tab$,etiqueta_t2$
-			contador_etiquetas_inicio_espacio_tier_2 = contador_etiquetas_inicio_espacio_tier_2 + 1
-			etiqueta_t2$ = replace$ (etiqueta_t2$," <", "<",1)
-			Set interval text: 2, i, etiqueta_t2$
-		endif
+
+	if startsWith(etiqueta_2$, " ")
+
+		largo = length(etiqueta_2$)
+
+		appendInfoLine: i, tab$, largo
+
+		nueva_etiqueta_2$ = right$(etiqueta_2$, largo-1)
+
+		appendInfoLine: etiqueta_2$
+
+		appendInfoLine: nueva_etiqueta_2$
+
+		Set interval text: 2, i, nueva_etiqueta_2$
+
+		contador_espacios_iniciales = contador_espacios_iniciales + 1
+	
+	endif
+
+
+	if endsWith(etiqueta_2$, " ")
+
+		largo = length(etiqueta_2$)
+
+		appendInfoLine: i, tab$, largo
+
+		nueva_etiqueta_2$ = left$(etiqueta_2$, largo-1)
+
+		appendInfoLine: etiqueta_2$
+
+		appendInfoLine: nueva_etiqueta_2$
+
+		Set interval text: 2, i, nueva_etiqueta_2$
+
+		contador_espacios_finales = contador_espacios_finales + 1
+	
+	endif
+
 endfor
 
 
-appendInfoLine: "Se han realizado ", contador_etiquetas_inicio_espacio_tier_2, " eliminaciones de espacio inicial en etiquetas del tier 2"
 
 
 
 
-for i to n_intervalos_tier_3
+for i to ene_intervalos_3
 
-	select tg
+	etiqueta_3$ = Get label of interval: 3, i
 
-	etiqueta_t3$ = Get label of interval: 3, i
+	primer_caracter_3$ = left$(etiqueta_3$, 1)
 
-	primer_caracter_t3$ = left$(etiqueta_t3$, 2)
+	ultimo_caracter_3$ = right$(etiqueta_3$, 1)
 
-		if primer_caracter_t3$ == " <"
-			appendInfoLine: i,tab$,etiqueta_t3$
-			contador_etiquetas_inicio_espacio_tier_3 = contador_etiquetas_inicio_espacio_tier_3 + 1
-			etiqueta_t3$ = replace$ (etiqueta_t3$," <", "<",1)
-			Set interval text: 3, i, etiqueta_t3$
-		endif
+
+	if startsWith(etiqueta_3$, " ")
+
+		largo = length(etiqueta_3$)
+
+		appendInfoLine: i, tab$, largo
+
+		nueva_etiqueta_3$ = right$(etiqueta_3$, largo-1)
+
+		appendInfoLine: etiqueta_3$
+
+		appendInfoLine: nueva_etiqueta_3$
+
+		Set interval text: 3, i, nueva_etiqueta_3$
+
+		contador_espacios_iniciales = contador_espacios_inciales + 1
+	
+	endif
+
+
+	if endsWith(etiqueta_3$, " ")
+
+		largo = length(etiqueta_3$)
+
+		appendInfoLine: i, tab$, largo
+
+		nueva_etiqueta_3$ = left$(etiqueta_3$, largo-1)
+
+		appendInfoLine: etiqueta_3$
+
+		appendInfoLine: nueva_etiqueta_3$
+
+		Set interval text: 3, i, nueva_etiqueta_3$
+
+		contador_espacios_finales = contador_espacios_finales + 1
+	
+	endif
+
 endfor
 
 
-appendInfoLine: "Se han realizado ", contador_etiquetas_inicio_espacio_tier_3, " eliminaciones de espacio inicial en etiquetas del tier 3"
+for i to ene_intervalos_4
+
+	etiqueta_4$ = Get label of interval: 4, i
+
+	primer_caracter_4$ = left$(etiqueta_4$, 1)
+
+	ultimo_caracter_4$ = right$(etiqueta_4$, 1)
 
 
+	if startsWith(etiqueta_4$, " ")
+
+		largo = length(etiqueta_4$)
+
+		appendInfoLine: i, tab$, largo
+
+		nueva_etiqueta_4$ = right$(etiqueta_4$, largo-1)
+
+		appendInfoLine: etiqueta_4$
+
+		appendInfoLine: nueva_etiqueta_4$
+
+		Set interval text: 4, i, nueva_etiqueta_4$
+
+		contador_espacios_iniciales = contador_espacios_iniciales + 1
+	
+	endif
 
 
+	if endsWith(etiqueta_4$, " ")
 
+		largo = length(etiqueta_4$)
 
-for i to n_intervalos_tier_4
+		appendInfoLine: i, tab$, largo
 
-	select tg
+		nueva_etiqueta$ = left$(etiqueta_4$, largo-1)
 
-	etiqueta_t4$ = Get label of interval: 4, i
+		appendInfoLine: etiqueta_4$
 
-	primer_caracter_t4$ = left$(etiqueta_t4$, 2)
+		appendInfoLine: nueva_etiqueta_4$
 
-		if primer_caracter_t4$ == " <"
-			appendInfoLine: i,tab$,etiqueta_t4$
-			contador_etiquetas_inicio_espacio_tier_4 = contador_etiquetas_inicio_espacio_tier_4 + 1
-			etiqueta_t4$ = replace$ (etiqueta_t4$," <", "<",1)
-			Set interval text: 4, i, etiqueta_t4$
-		endif
+		Set interval text: 4, i, nueva_etiqueta_4$
+
+		contador_espacios_finales = contador_espacios_finales + 1
+	
+	endif
+
 endfor
 
-
-appendInfoLine: "Se han realizado ", contador_etiquetas_inicio_espacio_tier_4, " eliminaciones de espacio inicial en etiquetas del tier 4"
+appendInfoLine: "Sustituciones de espacios iniciales: " + fixed$(contador_espacios_iniciales, 0)
+appendInfoLine: "Sustituciones de espacios finales: " + fixed$(contador_espacios_finales, 0)
