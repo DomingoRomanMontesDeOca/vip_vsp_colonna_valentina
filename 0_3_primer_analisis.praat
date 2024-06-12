@@ -371,7 +371,7 @@ for i to ene_intervalos_tier_2
 
 	etiqueta2$ = Get label of interval: 2, i
 
-	if etiqueta2$ <> "" and etiqueta2$ <> "<P>" and etiqueta2$ <> "<pl>" and etiqueta2$ <> "<pb>" and etiqueta2$ <> " "
+	if etiqueta2$ <> "" and etiqueta2$ <> "<P>" and etiqueta2$ <> "<pl>" and etiqueta2$ <> "<pb>" and etiqueta2$ <> "<pm>" and etiqueta2$ <> " "
 
 		ini_intervalo_tier_2 = Get start time of interval: 2, i
 
