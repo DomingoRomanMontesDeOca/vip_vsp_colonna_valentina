@@ -51,6 +51,16 @@ else
 
 endif
 
+
+
+
+
+
+
+
+
+
+
 ene_sonidos_seleccionados = numberOfSelected("Sound")
 
 ene_etiquet_seleccionados = numberOfSelected("TextGrid")
@@ -86,27 +96,57 @@ ene_intervalos_tier_4 = Get number of intervals: 4
 
 writeInfoLine: "Comienza análisis de ", sn$ 
 
-
 # variables para datos de las primeras columnas: lector, autor, poema, etc.
-
-apellido_lector$ = left$(sn$, 4)
-
+#apellido_lector$ = left$(sn$, 4)
 # Diferenciador de apellido en caso de que haya más de uno con el mismo apellido
+#diferen_apellido$ = mid$(sn$, 5, 1)
+#sexo$ = mid$(sn$, 6,1)
+#ciudad$ = mid$(sn$, 7, 3)
+#autor$ = mid$(sn$,11,4)
+#n_poema$ = mid$(sn$,15,1) 
+#lengua$ =mid$(sn$,16,2)
+#ano_grabacion$ = mid$(sn$,18,4)
 
-diferen_apellido$ = mid$(sn$, 5, 1)
 
-sexo$ = mid$(sn$, 6,1)
+# ================ Nueva forma de datos a partir del nombre de archivo ================ 
 
-ciudad$ = mid$(sn$, 7, 3)
 
-autor$ = mid$(sn$,11,4)
 
-n_poema$ = mid$(sn$,15,1) 
 
-lengua$ =mid$(sn$,16,2)
+largo_nombre = length(tg$)
 
-ano_grabacion$ = mid$(sn$,18,4)
+ano_grabacion$ = right$(tg$, 4)
 
+largo_nombre = length(tg$)
+
+nom$ = left$(tg$, (largo_nombre-4))
+
+quiebre_1 = index_regex(nom$, "(1|2|3|4|5|6|7|8|9|0)")
+
+apellido_lector$ = left$(nom$, quiebre_1-1)
+
+largo_apellido = length(apellido_lector$)
+
+sexo$ = mid$(nom$, quiebre_1+1, 1)
+
+diferen_apellido$ = mid$(nom$, quiebre_1, 1)
+
+lengua$ = right$(nom$, 2)
+
+ciudad$ = mid$(nom$, quiebre_1+2,4)
+
+ini_apellido_2 = quiebre_1+6
+
+fin_apellido_2 = largo_nombre-2
+
+autor$ = mid$(nom$, ini_apellido_2,((fin_apellido_2-4)-ini_apellido_2))
+
+# para el id 2
+id_dos_a$ = right$(nom$, 3)
+
+n_poema$ =left$(id_dos_a$, 1)
+
+# ================ ================ 
 
 
 # crea objeto de intensidad
@@ -303,7 +343,7 @@ for i to ene_intervalos_tier_2
 
 		Set string value: contador_etiquetas, "apellido_lector", apellido_lector$
 
-		Set string value: contador_etiquetas, "diferen_apellido",diferen_apellido$
+		Set string value: contador_etiquetas, "diferen_apellido", diferen_apellido$
 
 		Set string value: contador_etiquetas, "sexo", sexo$
 
@@ -802,7 +842,7 @@ for i to nfilas
 	
 		elif sinonim > 1
 
-		etiqueta_sinonimia$ = "Más de 1"
+			etiqueta_sinonimia$ = "Más de 1"
 
 		endif
 
