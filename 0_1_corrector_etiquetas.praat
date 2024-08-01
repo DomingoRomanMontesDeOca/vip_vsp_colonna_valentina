@@ -1,14 +1,12 @@
 # Corrige etiquetas (elimina espacios en blanco iniciales y finales)
-# en los tiers 1, 2, 3 y 4
 
+# en los tiers 1, 2, 3 y 4
 
 # inicio de contadores
 
 contador_espacios_iniciales = 0
 
 contador_espacios_finales = 0
-
-
 
 
 directorio$ = chooseDirectory$ ("Elija directorio con archivos")
@@ -19,10 +17,13 @@ strings1 = Create Strings as file list... lista_1 'directorio$'/*.TextGrid
 
 ene_archivos = Get number of strings
 
+
+
+
 writeInfoLine: "======"
+appendInfoLine: " *** R E P O R T E *** "
 
 
-appendInfoLine: " R E P O R T E "
 
 for i to ene_archivos
 
@@ -30,18 +31,20 @@ for i to ene_archivos
 
 	textg$ = Get string... i
 
-
-
 	tg = Read from file... 'directorio$'/'textg$'
 
-
 	ene_tiers = Get number of tiers
+
+
+
+	# Advierte en caso de que no hayan cuatro tiers
 
 	if ene_tiers <> 4
 
 		appendInfoLine: textg$, " tiene ", fixed$(ene_tiers,0), " tiers"
 
 	endif
+
 
 
 	ene_intervalos_1 = Get number of intervals: 1
@@ -57,22 +60,12 @@ for i to ene_archivos
 
 		etiqueta_1$ = Get label of interval: 1, i_inter
 
-		primer_caracter_1$ = left$(etiqueta_1$, 1)
-
-		ultimo_caracter_1$ = right$(etiqueta_1$, 1)
-
 
 		if startsWith(etiqueta_1$, " ")
 
 			largo = length(etiqueta_1$)
 
-			#appendInfoLine: i_inter, tab$, largo
-
 			nueva_etiqueta_1$ = right$(etiqueta_1$, largo-1)
-
-			#appendInfoLine: etiqueta_1$
-
-			#appendInfoLine: nueva_etiqueta_1$
 
 			Set interval text: 1, i_inter, nueva_etiqueta_1$
 
@@ -85,13 +78,7 @@ for i to ene_archivos
 
 			largo = length(etiqueta_1$)
 
-			#appendInfoLine: i_inter, tab$, largo
-
 			nueva_etiqueta_1$ = left$(etiqueta_1$, largo-1)
-
-			#appendInfoLine: etiqueta_1$
-
-			#appendInfoLine: nueva_etiqueta_1$
 
 			Set interval text: 1, i_inter, nueva_etiqueta_1$
 
@@ -107,22 +94,12 @@ for i to ene_archivos
 
 		etiqueta_2$ = Get label of interval: 2, i_inter
 
-		primer_caracter_2$ = left$(etiqueta_2$, 1)
-
-		ultimo_caracter_2$ = right$(etiqueta_2$, 1)
-
 
 		if startsWith(etiqueta_2$, " ")
 
 			largo = length(etiqueta_2$)
 
-			#appendInfoLine: i_inter, tab$, largo
-
 			nueva_etiqueta_2$ = right$(etiqueta_2$, largo-1)
-
-			#appendInfoLine: etiqueta_2$
-
-			#appendInfoLine: nueva_etiqueta_2$
 
 			Set interval text: 2, i_inter, nueva_etiqueta_2$
 
@@ -135,13 +112,7 @@ for i to ene_archivos
 
 			largo = length(etiqueta_2$)
 
-			#appendInfoLine: i_inter, tab$, largo
-
 			nueva_etiqueta_2$ = left$(etiqueta_2$, largo-1)
-
-			#appendInfoLine: etiqueta_2$
-
-			#appendInfoLine: nueva_etiqueta_2$
 
 			Set interval text: 2, i_inter, nueva_etiqueta_2$
 
@@ -158,22 +129,12 @@ for i to ene_archivos
 
 		etiqueta_3$ = Get label of interval: 3, i_inter
 
-		primer_caracter_3$ = left$(etiqueta_3$, 1)
-
-		ultimo_caracter_3$ = right$(etiqueta_3$, 1)
-
 
 		if startsWith(etiqueta_3$, " ")
 
 			largo = length(etiqueta_3$)
 
-			#appendInfoLine: i_inter, tab$, largo
-
 			nueva_etiqueta_3$ = right$(etiqueta_3$, largo-1)
-
-			#appendInfoLine: etiqueta_3$
-
-			#appendInfoLine: nueva_etiqueta_3$
 
 			Set interval text: 3, i_inter, nueva_etiqueta_3$
 
@@ -186,13 +147,7 @@ for i to ene_archivos
 
 			largo = length(etiqueta_3$)
 
-			#appendInfoLine: i_inter, tab$, largo
-
 			nueva_etiqueta_3$ = left$(etiqueta_3$, largo-1)
-
-			#appendInfoLine: etiqueta_3$
-
-			#appendInfoLine: nueva_etiqueta_3$
 
 			Set interval text: 3, i_inter, nueva_etiqueta_3$
 
@@ -207,22 +162,12 @@ for i to ene_archivos
 
 		etiqueta_4$ = Get label of interval: 4, i_inter
 
-		primer_caracter_4$ = left$(etiqueta_4$, 1)
-
-		ultimo_caracter_4$ = right$(etiqueta_4$, 1)
-
 
 		if startsWith(etiqueta_4$, " ")
 	
 			largo = length(etiqueta_4$)
 
-			#appendInfoLine: i_inter, tab$, largo
-
 			nueva_etiqueta_4$ = right$(etiqueta_4$, largo-1)
-
-			#appendInfoLine: etiqueta_4$
-
-			#appendInfoLine: nueva_etiqueta_4$
 
 			Set interval text: 4, i_inter, nueva_etiqueta_4$
 
@@ -235,13 +180,7 @@ for i to ene_archivos
 
 			largo = length(etiqueta_4$)
 
-			#appendInfoLine: i_inter, tab$, largo
-
 			nueva_etiqueta_4$ = left$(etiqueta_4$, largo-1)
-
-			#appendInfoLine: etiqueta_4$
-
-			#appendInfoLine: nueva_etiqueta_4$
 
 			Set interval text: 4, i_inter, nueva_etiqueta_4$
 
@@ -251,14 +190,34 @@ for i to ene_archivos
 
 	endfor
 
-appendInfoLine: textg$,tab$, "analizado"
+	Save as text file: "'directorio$'/'textg$'"
+
+	appendInfoLine: textg$,tab$, "analizado"
+
+	select tg
+
+	Remove
 
 endfor
 
-
-
-appendInfoLine: "Sustituciones de espacios iniciales: " + fixed$(contador_espacios_iniciales, 0)
-appendInfoLine: "Sustituciones de espacios finales: " + fixed$(contador_espacios_finales, 0)
+select strings1
+Remove
 
 appendInfoLine: "Sustituciones de espacios iniciales: " + fixed$(contador_espacios_iniciales, 0)
 appendInfoLine: "Sustituciones de espacios finales: " + fixed$(contador_espacios_finales, 0)
+
+appendInfoLine: "..."
+appendInfoLine: "..."
+appendInfoLine: "..."
+appendInfoLine: "Recomendación..."
+
+if contador_espacios_iniciales <> 0 or contador_espacios_finales <> 0
+
+	appendInfoLine: "Aplique nuevamente el script :) "
+
+elsif contador_espacios_iniciales == 0 and contador_espacios_finales == 0
+
+	appendInfoLine: "No vuelva a aplicar el script. Todo está Ok! ;) "
+
+endif
+
