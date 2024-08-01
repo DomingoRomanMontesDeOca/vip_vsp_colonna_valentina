@@ -18,27 +18,51 @@ contador_espacios_iniciales = 0
 contador_espacios_finales = 0
 
 
+# Selección de directorio
+
 directorio$ = chooseDirectory$ ("Elija directorio con archivos")
+
+
+# Creación de lista con los nombres de los TextGrids existentes en ese directorio
 
 strings1 = Create Strings as file list... lista_1 'directorio$'/*.TextGrid
 
-# la extensión puede ser otra, ciertamente
+
+# Cuenta el número de elementos en la lista
 
 ene_archivos = Get number of strings
 
 
+# Imprime dos líneas de inicio del reporte
+
 writeInfoLine: "======"
+
 appendInfoLine: " *** R E P O R T E *** "
+
+
+# Comando for que ejecuta las instrucciones para todos los TextGrids del directorio
 
 for i to ene_archivos
 
+	# Selecciona la lista
+
 	select strings1
+
+
+	# Obtiene el nombre del elemento "i" de la lista
 
 	textg$ = Get string... i
 
+
+	# Lo lee como objeto
+
 	tg = Read from file... 'directorio$'/'textg$'
 
+
+	# Cuenta el número de tiers que tiene el TextGrid "i"
+
 	ene_tiers = Get number of tiers
+
 
 	# Advierte en caso de que no hayan cuatro tiers
 
@@ -48,6 +72,9 @@ for i to ene_archivos
 
 	endif
 
+
+	# Cuenta en número de intervalos en cada tier
+
 	ene_intervalos_1 = Get number of intervals: 1
 
 	ene_intervalos_2 = Get number of intervals: 2
@@ -56,6 +83,8 @@ for i to ene_archivos
 
 	ene_intervalos_4 = Get number of intervals: 4
 
+
+	# Comando por para cada intervalo del tier 1
 
 	for i_inter to ene_intervalos_1
 
@@ -90,6 +119,7 @@ for i to ene_archivos
 	endfor
 
 
+	# Comando por para cada intervalo del tier 2
 
 	for i_inter to ene_intervalos_2
 
@@ -124,7 +154,7 @@ for i to ene_archivos
 	endfor
 
 
-
+	# Comando por para cada intervalo del tier 3
 
 	for i_inter to ene_intervalos_3
 
@@ -158,6 +188,8 @@ for i to ene_archivos
 
 	endfor
 
+
+	# Comando por para cada intervalo del tier 4
 
 	for i_inter to ene_intervalos_4
 
