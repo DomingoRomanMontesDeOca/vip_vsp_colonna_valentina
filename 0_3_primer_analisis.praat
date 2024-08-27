@@ -94,12 +94,10 @@ if tg$ <> sn$ or tg$ <> tono$ or sn$ <> tono$
 endif
 
 
-# es posible hacer esto: 
-# verificar que el nombre de cada objeto coincida con los otros correspondientes (tengan la misma longitud sin contar la extensión)
 
+# verificación de que la longitud del nombre de cada objeto coincida con las de los otros
 
-
-# calcula la longitud de cada nombre
+## calcula la longitud de cada nombre
 largo_sn = length(sn$)
 largo_tg = length(tg$)
 largo_tono  = length(tono$)
@@ -137,10 +135,9 @@ appendInfoLine: "Comienza análisis de ", sn$
 #ano_grabacion$ = mid$(sn$,18,4)
 
 
+
+
 # ================ Nueva forma de datos a partir del nombre de archivo ================ 
-
-
-
 
 largo_nombre = length(tg$)
 
@@ -179,12 +176,15 @@ n_poema$ =left$(id_dos_a$, 1)
 
 # ================ ================ 
 
-
-# crea objeto de intensidad
+## Comienza el análisis propiamente tal:
+## crea objeto de intensidad
 
 select sn
 
 intensidad =  To Intensity: 100, 0, "yes"
+
+
+
 
 # inicia contador de intervalos sin considerar las pausa
 
@@ -424,17 +424,20 @@ select tabla_por_curva
 
 Append quotient column: "n_silabas", "duracion", "vel_elocucion"
 
-
 appendInfoLine: "Velocidad de elocución inserta en la tabla"
 
-select tg
 
-# Recorre todos los intervalos del tier 2 (CP)
 
+
+# análisis de la relación verso-curva
 
 tabla_provisoria = Create Table with column names: "provisoria", contador_de_intervalos_sin_pausa, { "a", "b", "c" }
 
 contador_casos = 0
+
+# Recorre todos los intervalos del tier 2 (CP)
+
+select tg
 
 for i to ene_intervalos_tier_2
 
@@ -545,6 +548,9 @@ Set numeric value: n_filas_tabla_provisoria, "c", valor_c
 
 # Si no coincide, verso-curva = 0
 
+
+
+
 select tabla_por_curva
 
 n_filas_tabla_por_curva = Get number of rows
@@ -576,10 +582,10 @@ for i to n_filas_tabla_por_curva
 
 endfor
 
-select intensidad
 
-plus tabla_provisoria
 
+
+select tabla_provisoria
 Remove
 
 appendInfoLine: "Se ha realizado el análisis de verso-curva"
@@ -992,4 +998,4 @@ appendInfoLine: "Se ha realizado el análisis completo"
 
 
 # En la tabla con los datos se puede eliminar (al final) la columna 10 que señala el número del intervalo
-
+# falta análisis de la intensidad
