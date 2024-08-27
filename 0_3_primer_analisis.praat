@@ -1,5 +1,7 @@
 # Versión infinita
 
+# 27 de agosto 2024
+
 # el script puede fallar por etiquetas mal puestas de pausas en tier 2
 
 # ejemplo:
@@ -26,8 +28,10 @@
 
 # se supone un TextGrid de 10 capas
 
-# Verifica que sean tres los objetos seleccionados
 
+
+
+# Verifica que sean tres los objetos seleccionados
 
 ene_objetos_seleccionados = numberOfSelected()
 
@@ -57,8 +61,7 @@ endif
 
 
 
-
-
+# número de objetos por clase. Debe ser uno de cada uno.
 
 
 ene_sonidos_seleccionados = numberOfSelected("Sound")
@@ -67,23 +70,49 @@ ene_etiquet_seleccionados = numberOfSelected("TextGrid")
 
 ene_tonos_seleccionados = numberOfSelected("Pitch")
 
+
+
+# Si no coinciden los número por clase...
+
 if ene_sonidos_seleccionados <> 1 or ene_etiquet_seleccionados <> 1 or ene_tonos_seleccionados <> 1
 
-	appendInfoLine: "Falta un objeto en la selección"
+	appendInfoLine: "Falta un tipo objeto en la selección"
+
+	pauseScript: "OJO"
 
 endif
 
 
+# si no coinciden los nombres de cada objeto por clase
 
-if tg$ <> sn$ or sn$ <> tono$ or tono$ <> tg$
+if tg$ <> sn$ or tg$ <> tono$ or sn$ <> tono$
 
 	appendInfoLine: "Revise que sean los archivos que corresponde"
 
+	pauseScript: "OJO: es probable que uno de los objetos no corresponda"
+
 endif
 
 
-
+# es posible hacer esto: 
 # verificar que el nombre de cada objeto coincida con los otros correspondientes (tengan la misma longitud sin contar la extensión)
+
+
+
+# calcula la longitud de cada nombre
+largo_sn = length(sn$)
+largo_tg = length(tg$)
+largo_tono  = length(tono$)
+
+if largo_sn <> largo_tg or largo_tg <> largo_tono or largo_sn <> largo_tono
+
+	appendInfoLine: "nombres no coinciden en longitud"
+
+	pauseScript: "Nombres no coinciden en longitud"
+
+endif
+
+
 
 # cuenta intervalos en tiers 2 y 4
 
@@ -94,7 +123,7 @@ ene_intervalos_tier_2 = Get number of intervals: 2
 ene_intervalos_tier_4 = Get number of intervals: 4
 
 
-writeInfoLine: "Comienza análisis de ", sn$ 
+appendInfoLine: "Comienza análisis de ", sn$ 
 
 # variables para datos de las primeras columnas: lector, autor, poema, etc.
 #apellido_lector$ = left$(sn$, 4)
@@ -141,7 +170,9 @@ fin_apellido_2 = largo_nombre-2
 
 autor$ = mid$(nom$, ini_apellido_2,((fin_apellido_2-4)-ini_apellido_2))
 
+
 # para el id 2
+
 id_dos_a$ = right$(nom$, 3)
 
 n_poema$ =left$(id_dos_a$, 1)
@@ -522,7 +553,11 @@ n_filas_tabla_por_curva = Get number of rows
 
 if n_filas_tabla_por_curva <> n_filas_tabla_provisoria
 
-	writeInfoLine: "Alerta, cuore, diferencia en número de filas en ambas tablas"
+	appendInfoLine: "====="
+
+	appendInfoLine: "Alerta, cuore, diferencia en número de filas en ambas tablas"
+
+	pauseScript: "OJO"
 
 endif
 
@@ -953,3 +988,8 @@ appendInfoLine: "Se ha realizado el análisis del encabalgamiento"
 
 appendInfoLine:"==============="
 appendInfoLine: "Se ha realizado el análisis completo"
+
+
+
+# En la tabla con los datos se puede eliminar (al final) la columna 10 que señala el número del intervalo
+
