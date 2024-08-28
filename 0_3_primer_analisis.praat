@@ -1,6 +1,6 @@
 # Versión infinita
 
-# 27 de agosto 2024
+# 28 de agosto 2024
 
 # el script puede fallar por etiquetas mal puestas de pausas en tier 2
 
@@ -56,11 +56,6 @@ else
 endif
 
 
-
-
-
-
-
 # número de objetos por clase. Debe ser uno de cada uno.
 
 
@@ -98,9 +93,13 @@ endif
 # verificación de que la longitud del nombre de cada objeto coincida con las de los otros
 
 ## calcula la longitud de cada nombre
+
 largo_sn = length(sn$)
+
 largo_tg = length(tg$)
+
 largo_tono  = length(tono$)
+
 
 if largo_sn <> largo_tg or largo_tg <> largo_tono or largo_sn <> largo_tono
 
@@ -177,13 +176,14 @@ n_poema$ =left$(id_dos_a$, 1)
 # ================ ================ 
 
 ## Comienza el análisis propiamente tal:
+
 ## crea objeto de intensidad
+
+
 
 select sn
 
 intensidad =  To Intensity: 100, 0, "yes"
-
-
 
 
 # inicia contador de intervalos sin considerar las pausa
