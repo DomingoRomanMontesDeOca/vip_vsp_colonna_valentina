@@ -1,3 +1,6 @@
+# Este script funciona solo con aquellos TextGrid de 4 tiers
+
+
 
 directorio$ = chooseDirectory$ ("Elija directorio con archivos")
 
