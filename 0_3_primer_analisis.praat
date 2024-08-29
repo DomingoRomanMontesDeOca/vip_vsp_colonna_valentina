@@ -1,9 +1,3 @@
-# Versión infinita
-
-# 28 de agosto 2024
-
-# el script puede fallar por etiquetas mal puestas de pausas en tier 2
-
 # ejemplo:
 
 # 	nombre de audio : Mora0fGranLorca1Es2023
@@ -215,8 +209,11 @@ endfor
 
 # crea la tabla para disponer los datos por curva prosódica. El contador_de_intervalos_sin_pausa es el número de curvas prosódicas de la recitación
 
-tabla_por_curva = Create Table with column names: "table", contador_de_intervalos_sin_pausa, { "apellido_lector", "diferen_apellido", "sexo", "ciudad", "autor", "n_poema", "lengua", "ano_grabacion","n_cp","n_intervalo","n_verso","hemiverso","texto", "n_silabas", "verso-curva", "duracion", "n_pr", "st", "x_hz", "dif_max_min_db", "x_db", "interrup", "sinonimia", "declarat_poet", "focus1","focus2","focus3", "encabalga" }
+tabla_por_curva = Create Table with column names: "table", contador_de_intervalos_sin_pausa, { "apellido_lector", "diferen_apellido", "sexo", "ciudad", "autor", "n_poema", 
+... "lengua", "ano_grabacion","n_cp","n_intervalo","n_verso","hemiverso","texto", "n_silabas", "verso-curva", "duracion", "n_pr", "st", "x_hz", "dif_max_min_db", "x_db", 
+... "interrup", "sinonimia", "declarat_poet", "focus1","focus2","focus3", "encabalga" }
 
+# Si se requiere agregar los valores de intensidad, habría que agregar tres columnas: "intens1", "intens2", "intens3", 
 
 # agrega un número correlativo del verso-curva en la tabla
 
@@ -353,6 +350,36 @@ for i to ene_intervalos_tier_2
 	endif
 
 
+	select selecto
+
+	ene_puntos_tier_9 = Get number of points: 9
+
+
+	if ene_puntos_tier_9 == 2
+
+		select selecto
+
+		declarativa_punto_1 = Get time of point: 9, 1
+
+		declarativa_punto_2 = Get time of point: 9, 2
+
+		select tono
+
+		ini_t_declarat = Get value at time: declarativa_punto_1, "Hertz", "linear"
+
+		fin_t_declarat = Get value at time: declarativa_punto_2, "Hertz", "linear"
+
+		st_declarat = 12*log2(ini_t_declarat/fin_t_declarat)
+
+	else
+		st_declarat = 0
+
+	endif
+
+
+
+
+
 	select tono
 
 	x_f0 = Get mean: ini, fin, "Hertz"
@@ -362,6 +389,7 @@ for i to ene_intervalos_tier_2
 	min_f0 = Get minimum: ini, fin, "Hertz", "parabolic"
 
 	st_max_min = 12*log2(max_f0/min_f0)
+
 
 
 	if etiqueta2$ <> "<pl>" and etiqueta2$ <> "<pb>" and etiqueta2$ <> "<pm>" and etiqueta2$ <> "<pll>" and etiqueta2$ <> "<P>" and etiqueta2$ <> "" and etiqueta2$ <> " "
@@ -403,6 +431,8 @@ for i to ene_intervalos_tier_2
 		Set numeric value: contador_etiquetas, "dif_max_min_db", dif_max_min_db
 
 		Set numeric value: contador_etiquetas, "x_db", x_db
+
+		Set numeric value: contador_etiquetas, "declarat_poet", st_declarat
 		
 		Set numeric value: contador_etiquetas, "encabalga", 0
 
@@ -986,8 +1016,11 @@ endfor
 
 select sin_filas_vacias
 plus tabla_provisoria_2
+plus intensidad
 Remove
 
+select tabla_por_curva
+Rename: sn$
 
 appendInfoLine: "Se ha realizado el análisis del encabalgamiento"
 
@@ -996,6 +1029,4 @@ appendInfoLine:"==============="
 appendInfoLine: "Se ha realizado el análisis completo"
 
 
-
 # En la tabla con los datos se puede eliminar (al final) la columna 10 que señala el número del intervalo
-# falta análisis de la intensidad
