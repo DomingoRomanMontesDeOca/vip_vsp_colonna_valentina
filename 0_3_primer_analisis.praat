@@ -1030,3 +1030,13 @@ appendInfoLine: "Se ha realizado el análisis completo"
 
 
 # En la tabla con los datos se puede eliminar (al final) la columna 10 que señala el número del intervalo
+
+### falta 
+# verso curva cp == verso
+# hemiverso una curva incluye una parte de un verso
+# interverso : un verso completo o porción de un verso y otra porción de otro verso en la misma curva
+# más de un verso: 2, 3, 4...
+# poliverso una curva con más de dos versos completos
+# biverso: una curva con dos versos enteros
+# una cp con dos versos completos + una porción de otro PROBLEMA 
+# interverso plus 
