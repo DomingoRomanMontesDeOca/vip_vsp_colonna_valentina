@@ -1,5 +1,5 @@
 # Script para Praat
-# VIP_VSP_Radar_Data_Extraction_Analisis_Fonetico_Poema_VC_DR. Versión 3, 12 de septiembre 2024
+# VIP_VSP_Radar_Analisis_Fonetico_Poema_VC_DR Versión 3, 12 de septiembre 2024
 # probado en versión 6.4.19 de Praat
 # Autores: Valentina Colonna y Domingo Román
 # 
