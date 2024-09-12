@@ -1,3 +1,9 @@
+# Script para Praat
+# Análisis métrico VC_DR. Versión 3, 12 de septiembre 2024
+# probado en versión 6.4.19 de Praat
+# Autores: Valentina Colonna y Domingo Román
+# 
+
 # ejemplo:
 
 # 	nombre de audio : Mora0fGranLorca1Es2023
