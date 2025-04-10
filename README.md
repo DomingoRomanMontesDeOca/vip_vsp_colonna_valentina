@@ -1,7 +1,10 @@
-## Autores
+## Autores/Authors
 Valentina Colonna y Domingo Román
 
-## El orden de aplicación debe ser el siguiente:
+## Cómo citar el script/Credits
+Colonna, V. & Román Montes de Oca, D. (2024). VIP-VSP-Radar Data Extraction for Poem Phonetic Analysis. Praat script.
+
+## El orden de aplicación debe ser el siguiente/The order of application should be as follows:
 
 1. corrección de etiquetas
 2. agrega dos tiers
