@@ -251,3 +251,9 @@ elsif contador_espacios_iniciales == 0 and contador_espacios_finales == 0
 
 endif
 
+
+
+	appendInfoLine: "No vuelva a aplicar el script. Todo está Ok! ;) "
+
+endif
+
