@@ -1,6 +1,10 @@
 ## Autores/Authors
 Valentina Colonna y Domingo Román
 
+Los scripts se han desarrollado en el marco del Proyecto "Voices of Spanish Poets: Vocal Archive and Experimental Study on Poetry Reading" (VSP), que ha recibido financiación del programa de inovación e investigación Horizone Europa de la Unión Europea, en el marco del Marie Skłodowska-Curie grant agreement No 101109465. Financiado por la Unión Europea. No obstante, los puntos de vista y opiniones expresados son únicamente los del/de la autor/a y no reflejan necesariamente los de la Unión Europea ni los de la Agencia Ejecutiva Europea de Investigación (REA). Ni la Unión Europea ni la autoridad otorgante pueden ser consideradas responsables de los mismos.
+
+The scripts have been developed within the framework of the project "Voices of Spanish Poets: Vocal Archive and Experimental Study on Poetry Reading" (VSP), which has received funding from the European Union’s Horizon Europe research and innovation programme under the Marie Skłodowska-Curie grant agreement No. 101109465. Funded by the European Union. Views and opinions expressed are however those of the authors only and do not necessarily reflect those of the European Union or the European Research Executive Agency (REA). Neither the European Union nor the granting authority 
+
 ## Cómo citar el script/Credits
 
 The scripts are applied to the annotation system and model of study developed by Colonna, V. (2022). Storia e analisi fonetica della lettura della poesia italiana. Dell'Orso. (cfr. also Colonna, V. & Romano, A. (2023). Vip-Radar: A Model for the Phoentic Study of Poetry Reading. In: Radek Skarnitzl & Jan Volín (Eds.)  Proceedings of the 20th International Congress of Phonetic Sciences, Prague, Czech Republic, 2023, Guarant International, 594-598). The same terminology is required. 
